@@ -1,13 +1,15 @@
-name: Keep Supabase Alive
+name: Ping Supabase
 
 on:
   schedule:
-    - cron: '0 0 * * 0'  # This means every 7 days at midnight
+    - cron: '0 0 */7 * *'  # Runs every 7 days
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Send a ping request to Supabase
-        run: |
-          curl -X GET "https://bggtinchqyqiwdipbxcw.supabase.co"
+    - name: Ping Supabase
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      run: |
+        curl -I "$SUPABASE_URL"
