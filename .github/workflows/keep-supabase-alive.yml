@@ -2,7 +2,7 @@ name: Keep Supabase Alive
 
 on:
   schedule:
-    - cron: '0 0 * * 7'  # This means every 7 days at midnight
+    - cron: '0 0 * * 0'  # This means every 7 days at midnight
 
 jobs:
   ping:
