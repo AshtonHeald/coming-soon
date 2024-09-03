@@ -3,6 +3,7 @@ name: Ping Supabase
 on:
   schedule:
     - cron: '0 0 */7 * *'  # Runs every 7 days
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   ping:
