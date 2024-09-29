@@ -1,8 +1,8 @@
-name: Ping Supabase
+name: Ping Supabase Daily
 
 on:
   schedule:
-    - cron: '0 0 */7 * *'  # Runs every 7 days
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
@@ -13,4 +13,10 @@ jobs:
       env:
         SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       run: |
-        curl -I "$SUPABASE_URL"
+        response=$(curl -sS -o /dev/null -w "%{http_code}" "$SUPABASE_URL")
+        if [ $response -eq 200 ]; then
+          echo "Supabase pinged successfully"
+        else
+          echo "Failed to ping Supabase. HTTP status code: $response"
+          exit 1
+        fi
